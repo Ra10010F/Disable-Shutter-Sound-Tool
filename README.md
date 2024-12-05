@@ -5,5 +5,5 @@ version 1.0を公開
 
 不具合等があればXの@Ra16fatttまでDMください。
 
-使わせて頂いたツール↓
+使わせて頂いたツール
 https://github.com/reindex-ot/15-Seconds-Online-ADB-Installer-and-Updater-jp
