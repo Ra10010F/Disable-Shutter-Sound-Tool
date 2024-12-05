@@ -7,3 +7,5 @@ version 1.0を公開
 
 使わせて頂いたツール
 https://github.com/reindex-ot/15-Seconds-Online-ADB-Installer-and-Updater-jp
+
+※このツールを使用して不具合が生じたとしても一切の責任を負いません。
