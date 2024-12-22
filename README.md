@@ -1,5 +1,5 @@
 # Disable Shutter Sound Tool
-国内板Samsung Galaxyシリーズのスマホのシャッター音を無効化するツールです。 adbを使って処理しているのでadbの環境が必須になります。
+国内版Samsung Galaxyシリーズのスマホのシャッター音を無効化するツールです。 adbを使って処理しているのでadbの環境が必須になります。
 
 不具合等があればXの@Ra16fatttまでDMください。
 
