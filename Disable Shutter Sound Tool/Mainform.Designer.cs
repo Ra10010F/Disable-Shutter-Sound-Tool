@@ -84,7 +84,7 @@
             // 情報ToolStripMenuItem
             // 
             this.情報ToolStripMenuItem.Name = "情報ToolStripMenuItem";
-            this.情報ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.情報ToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.情報ToolStripMenuItem.Text = "情報";
             this.情報ToolStripMenuItem.Click += new System.EventHandler(this.情報ToolStripMenuItem_Click);
             // 
@@ -100,20 +100,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-B", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label1.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label1.Location = new System.Drawing.Point(53, 39);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(230, 18);
+            this.label1.Size = new System.Drawing.Size(253, 18);
             this.label1.TabIndex = 5;
             this.label1.Text = "ADBコマンドを使用できません。";
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-B", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.linkLabel1.Location = new System.Drawing.Point(300, 42);
+            this.linkLabel1.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.linkLabel1.Location = new System.Drawing.Point(312, 41);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(137, 15);
+            this.linkLabel1.Size = new System.Drawing.Size(153, 15);
             this.linkLabel1.TabIndex = 6;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "ADBをインストールする";
@@ -122,7 +122,7 @@
             // 
             // buttonFetchDevices
             // 
-            this.buttonFetchDevices.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-B", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonFetchDevices.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonFetchDevices.Location = new System.Drawing.Point(12, 71);
             this.buttonFetchDevices.Name = "buttonFetchDevices";
             this.buttonFetchDevices.Size = new System.Drawing.Size(163, 32);
@@ -134,7 +134,7 @@
             // buttonDetails
             // 
             this.buttonDetails.Enabled = false;
-            this.buttonDetails.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-B", 12F, System.Drawing.FontStyle.Bold);
+            this.buttonDetails.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonDetails.Location = new System.Drawing.Point(12, 170);
             this.buttonDetails.Name = "buttonDetails";
             this.buttonDetails.Size = new System.Drawing.Size(485, 38);
@@ -146,17 +146,17 @@
             // labelConnectedDevice
             // 
             this.labelConnectedDevice.AutoSize = true;
-            this.labelConnectedDevice.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-B", 12F, System.Drawing.FontStyle.Bold);
+            this.labelConnectedDevice.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.labelConnectedDevice.Location = new System.Drawing.Point(12, 116);
             this.labelConnectedDevice.Name = "labelConnectedDevice";
-            this.labelConnectedDevice.Size = new System.Drawing.Size(225, 18);
+            this.labelConnectedDevice.Size = new System.Drawing.Size(248, 18);
             this.labelConnectedDevice.TabIndex = 10;
             this.labelConnectedDevice.Text = "デバイス情報を更新してください";
             // 
             // labelConnectedDeviceStatus
             // 
             this.labelConnectedDeviceStatus.AutoSize = true;
-            this.labelConnectedDeviceStatus.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-B", 12F, System.Drawing.FontStyle.Bold);
+            this.labelConnectedDeviceStatus.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.labelConnectedDeviceStatus.Location = new System.Drawing.Point(12, 143);
             this.labelConnectedDeviceStatus.Name = "labelConnectedDeviceStatus";
             this.labelConnectedDeviceStatus.Size = new System.Drawing.Size(241, 18);

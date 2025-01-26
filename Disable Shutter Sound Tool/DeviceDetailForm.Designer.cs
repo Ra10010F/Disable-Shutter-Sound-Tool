@@ -38,8 +38,8 @@
             // labelDeviceDetails
             // 
             this.labelDeviceDetails.AutoSize = true;
-            this.labelDeviceDetails.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-B", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelDeviceDetails.Location = new System.Drawing.Point(12, 9);
+            this.labelDeviceDetails.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelDeviceDetails.Location = new System.Drawing.Point(12, 12);
             this.labelDeviceDetails.Name = "labelDeviceDetails";
             this.labelDeviceDetails.Size = new System.Drawing.Size(179, 22);
             this.labelDeviceDetails.TabIndex = 0;
@@ -48,7 +48,7 @@
             // labelShutterKey
             // 
             this.labelShutterKey.AutoSize = true;
-            this.labelShutterKey.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-B", 14.25F, System.Drawing.FontStyle.Bold);
+            this.labelShutterKey.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.labelShutterKey.Location = new System.Drawing.Point(12, 42);
             this.labelShutterKey.Name = "labelShutterKey";
             this.labelShutterKey.Size = new System.Drawing.Size(121, 22);
@@ -58,7 +58,7 @@
             // buttonE
             // 
             this.buttonE.Enabled = false;
-            this.buttonE.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-B", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonE.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonE.Location = new System.Drawing.Point(16, 76);
             this.buttonE.Name = "buttonE";
             this.buttonE.Size = new System.Drawing.Size(219, 38);
@@ -70,7 +70,7 @@
             // buttonD
             // 
             this.buttonD.Enabled = false;
-            this.buttonD.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-B", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonD.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonD.Location = new System.Drawing.Point(241, 76);
             this.buttonD.Name = "buttonD";
             this.buttonD.Size = new System.Drawing.Size(219, 38);
@@ -89,6 +89,7 @@
             this.Controls.Add(this.labelShutterKey);
             this.Controls.Add(this.labelDeviceDetails);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "DeviceDetailForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
