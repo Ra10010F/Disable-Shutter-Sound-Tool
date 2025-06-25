@@ -39,9 +39,10 @@
             // 
             this.labelDeviceDetails.AutoSize = true;
             this.labelDeviceDetails.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelDeviceDetails.Location = new System.Drawing.Point(12, 12);
+            this.labelDeviceDetails.Location = new System.Drawing.Point(16, 15);
+            this.labelDeviceDetails.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelDeviceDetails.Name = "labelDeviceDetails";
-            this.labelDeviceDetails.Size = new System.Drawing.Size(179, 22);
+            this.labelDeviceDetails.Size = new System.Drawing.Size(228, 28);
             this.labelDeviceDetails.TabIndex = 0;
             this.labelDeviceDetails.Text = "labelDeviceDetail";
             // 
@@ -49,9 +50,10 @@
             // 
             this.labelShutterKey.AutoSize = true;
             this.labelShutterKey.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelShutterKey.Location = new System.Drawing.Point(12, 42);
+            this.labelShutterKey.Location = new System.Drawing.Point(16, 52);
+            this.labelShutterKey.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelShutterKey.Name = "labelShutterKey";
-            this.labelShutterKey.Size = new System.Drawing.Size(121, 22);
+            this.labelShutterKey.Size = new System.Drawing.Size(151, 28);
             this.labelShutterKey.TabIndex = 1;
             this.labelShutterKey.Text = "ShutterKey";
             // 
@@ -59,9 +61,10 @@
             // 
             this.buttonE.Enabled = false;
             this.buttonE.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonE.Location = new System.Drawing.Point(16, 76);
+            this.buttonE.Location = new System.Drawing.Point(21, 95);
+            this.buttonE.Margin = new System.Windows.Forms.Padding(4);
             this.buttonE.Name = "buttonE";
-            this.buttonE.Size = new System.Drawing.Size(219, 38);
+            this.buttonE.Size = new System.Drawing.Size(292, 48);
             this.buttonE.TabIndex = 2;
             this.buttonE.Text = "有効化";
             this.buttonE.UseVisualStyleBackColor = true;
@@ -71,9 +74,10 @@
             // 
             this.buttonD.Enabled = false;
             this.buttonD.Font = new System.Drawing.Font("UD デジタル 教科書体 NP", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonD.Location = new System.Drawing.Point(241, 76);
+            this.buttonD.Location = new System.Drawing.Point(321, 95);
+            this.buttonD.Margin = new System.Windows.Forms.Padding(4);
             this.buttonD.Name = "buttonD";
-            this.buttonD.Size = new System.Drawing.Size(219, 38);
+            this.buttonD.Size = new System.Drawing.Size(292, 48);
             this.buttonD.TabIndex = 3;
             this.buttonD.Text = "無効化";
             this.buttonD.UseVisualStyleBackColor = true;
@@ -81,14 +85,15 @@
             // 
             // DeviceDetailForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(483, 130);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(644, 162);
             this.Controls.Add(this.buttonD);
             this.Controls.Add(this.buttonE);
             this.Controls.Add(this.labelShutterKey);
             this.Controls.Add(this.labelDeviceDetails);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "DeviceDetailForm";
             this.Text = "Form1";

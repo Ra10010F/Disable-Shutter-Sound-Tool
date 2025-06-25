@@ -29,7 +29,7 @@ namespace Disable_Shutter_Sound_Tool
             this.Text = $"[モデル名: {model}, デバイスID: {deviceId}]の詳細";
 
             // ラベルにデバイス情報を設定
-            labelDeviceDetails.Text = $"モデル名: {model}, デバイスID: {deviceId}";
+            labelDeviceDetails.Text = $"モデル名: {model}  デバイスID: {deviceId}";
             // フォームのサイズ変更時にフォントサイズを調整
             this.Resize += (sender, e) => AdjustLabelFontSize();
             AdjustLabelFontSize(); // 初期サイズに合わせて調整
@@ -121,7 +121,7 @@ namespace Disable_Shutter_Sound_Tool
                     SizeF textSize = g.MeasureString(labelDeviceDetails.Text, testFont);
 
                     // テキストがラベルの幅に収まるか確認
-                    if (textSize.Width <= this.ClientSize.Width - 20) // マージンを考慮
+                    if (textSize.Width <= this.ClientSize.Width - 22) // マージンを考慮
                     {
                         break;
                     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ADB;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +10,8 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Security.Principal;
+using System.Runtime.InteropServices;
 
 namespace Disable_Shutter_Sound_Tool
 {
@@ -26,6 +28,10 @@ namespace Disable_Shutter_Sound_Tool
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.AutoScaleMode = AutoScaleMode.Dpi;
+
+            this.FormClosing += Mainform_FormClosing;
+            this.Shown += Mainform_Shown;
 
             label1.Text = adbMessage;
 
@@ -43,6 +49,20 @@ namespace Disable_Shutter_Sound_Tool
 
             // 詳細ボタンのクリックイベントを設定
             buttonDetails.Click += buttonDetails_Click;
+        }
+
+        private void Mainform_Load(object sender, EventArgs e) { }
+
+        private void Mainform_Shown(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.ShowTutorialForm)
+            {
+                using (var tutorialForm = new TutorialForm())
+                {
+                    tutorialForm.StartPosition = FormStartPosition.CenterParent;
+                    tutorialForm.ShowDialog(this); // Mainform を親にする
+                }
+            }
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -108,127 +128,163 @@ namespace Disable_Shutter_Sound_Tool
             }
         }
 
-        private void buttonFetchDevices_Click(object sender, EventArgs e)
+        private async void buttonFetchDevices_Click(object sender, EventArgs e)
         {
-            // 閉じるべきフォームを一時的にリストに保存
-            List<DeviceDetailForm> formsToClose = new List<DeviceDetailForm>();
-
-            foreach (var form in deviceForms.Values)
-            {
-                formsToClose.Add(form);  // フォームをリストに追加
-            }
-
-            // リストのフォームを一括で閉じる
+            List<DeviceDetailForm> formsToClose = deviceForms.Values.ToList();
             foreach (var form in formsToClose)
             {
                 form.Close();
             }
-
-            // 開いているフォームを辞書から削除
             deviceForms.Clear();
 
             buttonDetails.Enabled = false;
 
-            // デバイス情報を再取得するための処理（例: ADB コマンドを再実行）
-            FetchDevices();
+            await FetchDevices(); // 非同期呼び出しでフリーズ防止
         }
 
-        private void FetchDevices()
+
+        private async Task FetchDevices()
         {
             try
             {
-                // adbコマンドを実行するプロセスを設定
-                Process process = new Process();
-                process.StartInfo.FileName = "adb";
-                process.StartInfo.Arguments = "devices";
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.CreateNoWindow = true;
+                string output = await Task.Run(() =>
+                {
+                    Process process = new Process();
+                    process.StartInfo.FileName = "adb";
+                    process.StartInfo.Arguments = "devices";
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.CreateNoWindow = true;
 
-                // adbコマンドを実行
-                process.Start();
-                string output = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
+                    process.Start();
+                    string result = process.StandardOutput.ReadToEnd();
+                    process.WaitForExit();
 
+                    return result;
+                });
 
                 var lines = output.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-                bool devicesFound = false; // デバイスが見つかったかどうかを示すフラグ
 
-                labelConnectedDevice.Text = ""; // 初期化
-                labelConnectedDeviceStatus.Visible = false;
-
-                if (lines.Length > 2) // 複数デバイスが接続されている場合
+                Invoke((MethodInvoker)(() =>
                 {
-                    buttonDetails.Enabled = false;
-                    labelConnectedDevice.Visible = true;
-                    labelConnectedDeviceStatus.Visible = true;
-                    labelConnectedDevice.Text = "複数のデバイスが接続されています。";
-                    labelConnectedDeviceStatus.Text = "このツールは複数のデバイスの接続には対応しておりません。";
-                    //Console.Clear();
-                    //Console.WriteLine("---Error---");
-                    //Console.WriteLine("Multiple devices are connected.");
-                    MessageBox.Show("複数のデバイスが接続されています。\nこのツールは複数のデバイスの接続には対応しておりません。", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    labelConnectedDevice.Text = "";
+                    labelConnectedDeviceStatus.Visible = false;
+                }));
+
+                if (lines.Length > 2)
+                {
+                    Invoke((MethodInvoker)(() =>
+                    {
+                        buttonDetails.Enabled = false;
+                        labelConnectedDevice.Visible = true;
+                        labelConnectedDeviceStatus.Visible = true;
+                        labelConnectedDevice.Text = "複数のデバイスが接続されています。";
+                        labelConnectedDeviceStatus.Text = "このツールは複数のデバイスの接続には対応しておりません。";
+                        MessageBox.Show("複数のデバイスが接続されています。\nこのツールは複数のデバイスの接続には対応しておりません。", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }));
                 }
                 else if (lines.Length == 2)
                 {
-                    buttonDetails.Enabled = true;
+                    Invoke((MethodInvoker)(() => buttonDetails.Enabled = true));
 
                     foreach (var line in lines)
                     {
-                        // 行が "List of devices attached" のヘッダー行の場合はスキップ
                         if (line.StartsWith("List of devices attached")) continue;
 
-                        // 出力を解析してコンソールに表示
-                        //Console.Clear();
-                        //Console.WriteLine("Connected Devices:");
-
-                        // 行をタブで分割して解析
                         var parts = line.Split('\t');
                         if (parts.Length > 1)
                         {
-                            string deviceId = parts[0]; // デバイスID
-                            string status = parts[1];  // ステータス
-                            // モデル名を取得
-                            string modelName = GetDeviceModel(deviceId);
+                            string deviceId = parts[0];
+                            string status = parts[1];
+                            string modelName = await Task.Run(() => GetDeviceModel(deviceId));
 
-                            // デバイス情報を保存
                             selectedDeviceId = deviceId;
                             selectedStatus = status;
                             selectedModel = modelName;
 
-                            // デバイスが見つかったフラグを設定
-                            devicesFound = true;
+                            var statusMap = new Dictionary<string, string>()
+                            {
+                                { "device", "準備完了" },
+                                { "unauthorized", "未認証" },
+                                { "offline", "切断" }
+                            };
 
-                            // コンソール出力
-                            //Console.WriteLine($"Model: {modelName}, Device ID: {deviceId}, Status: {status}");
+                            string displayStatus = statusMap.ContainsKey(status) ? statusMap[status] : status;
 
-                            // labelに接続されているデバイスの情報を表示
-                            labelConnectedDevice.Visible = true;
-                            labelConnectedDeviceStatus.Visible = true;
-                            labelConnectedDevice.Text = $"モデル名: {modelName}, デバイスID: {deviceId}";
-                            labelConnectedDeviceStatus.Text = $"ステータス: {status}";
+                            Invoke((MethodInvoker)(() =>
+                            {
+                                labelConnectedDevice.Visible = true;
+                                labelConnectedDeviceStatus.Visible = true;
+                                labelConnectedDevice.Text = $"モデル名: {modelName}  デバイスID: {deviceId}";
+                                labelConnectedDeviceStatus.Text = $"ステータス: {displayStatus}";
+
+                                // ステータスが device のときのみ詳細ボタンを有効にする
+                                buttonDetails.Enabled = (status == "device");
+                            }));
                         }
                     }
                 }
                 else
                 {
-                    //Console.WriteLine("Not detected");
-                    labelConnectedDevice.Text = "デバイスが接続されていません。";
+                    Invoke((MethodInvoker)(() => labelConnectedDevice.Text = "デバイスが接続されていません。"));
                 }
             }
             catch (Exception ex)
             {
-                //Console.Clear();
-                //Console.WriteLine("An error has occurred: " + ex.Message);
+                Console.WriteLine($"FetchDevices Error: {ex.Message}");
+            }
+        }
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                if (!Program.IsRunAsAdministrator())
+                {
+                    var exeName = Application.ExecutablePath;
+                    ProcessStartInfo startInfo = new ProcessStartInfo(exeName, "install-adb")
+                    {
+                        UseShellExecute = true,
+                        Verb = "runas"
+                    };
+
+                    try
+                    {
+                        Process.Start(startInfo); 
+                        Application.Exit();
+                        return;
+                    }
+                    catch (Win32Exception)
+                    {
+                        MessageBox.Show("管理者としての実行が必要です。", "アクセス拒否", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    
+                }
+
+                Program.AllocConsole();
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                var installer = new ADBinstaller();
+                installer.Run();
+                Console.WriteLine("すべて完了しました");
+                Console.ResetColor();
+                Console.WriteLine("何かキーを押すと閉じます...");
+                Console.ReadKey();
+                Program.FreeConsole();
+            }
+            catch (Exception ex)
+            {
+                Program.AllocConsole();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("エラー: " + ex.Message);
+                Console.ResetColor();
+                Console.ReadKey();
+                Program.FreeConsole();
             }
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            linkLabel1.LinkVisited = true;
 
-            System.Diagnostics.Process.Start("https://github.com/reindex-ot/15-Seconds-Online-ADB-Installer-and-Updater-jp");
-        }
 
         private void 終了ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -263,8 +319,6 @@ namespace Disable_Shutter_Sound_Tool
             }
             catch (Exception ex)
             {
-                // エラーが発生した場合の処理
-                //Console.WriteLine($"Failed to get model name: {ex.Message}");
                 return "Error";
             }
         }
@@ -303,11 +357,43 @@ namespace Disable_Shutter_Sound_Tool
             }
             return false;  // デバイスが接続されていなければ false を返す
         }
+
+        private void チュートリアルを再表示ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var tutorialForm = new TutorialForm())
+            {
+                tutorialForm.StartPosition = FormStartPosition.CenterParent;
+                tutorialForm.ShowDialog(this); // Mainform を親にする
+
+                Properties.Settings.Default.ShowTutorialForm = true;
+                Properties.Settings.Default.Save();  // 設定を保存
+            }
+        }
+
+        public static class ConsoleManager
+        {
+            [DllImport("kernel32.dll")]
+            public static extern bool AllocConsole();
+
+            [DllImport("kernel32.dll")]
+            public static extern bool FreeConsole();
+        }
+        private void Mainform_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                Process process = new Process();
+                process.StartInfo.FileName = "adb";
+                process.StartInfo.Arguments = "kill-server";
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
+                process.Start();
+                process.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("adb kill-server エラー: " + ex.Message);
+            }
+        }
     }
 }
-
-
-
-
-
-
